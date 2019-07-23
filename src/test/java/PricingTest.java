@@ -32,4 +32,19 @@ class PricingTest {
         Assertions.assertEquals(400, result);
 
     }
+
+    @Test
+    void should_calculate_total_amount_of_bought_weighted_articles() {
+        //Given
+        Article article1 = new Article("article1", 100.00);
+        Article article2 = new Article("article2", 50.00);
+        ArticleWithQuantity articleWithQuantity1 = new ArticleWithQuantity(article1, 3.2);
+        ArticleWithQuantity articleWithQuantity2 = new ArticleWithQuantity(article2, 2.5);
+        Set<ArticleWithQuantity> articleWithQuantities = new HashSet<>(Arrays.asList(articleWithQuantity1, articleWithQuantity2));
+        //When
+        double result = pricingService.calculateTotal(articleWithQuantities);
+        //Then
+        Assertions.assertEquals(445d, result);
+
+    }
 }

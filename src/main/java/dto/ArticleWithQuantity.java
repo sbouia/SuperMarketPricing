@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ArticleWithQuantity {
     private Article article;
-    private int quantity;
+    private double quantity;
 
     @Override
     public boolean equals(Object o) {
