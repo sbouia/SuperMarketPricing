@@ -59,7 +59,7 @@ class PricingTest {
         //When
         double result = pricingService.calculateTotal(articleWithQuantities);
         //Then
-        double expectedTotel = (3.2 * 100) / 16;
-        Assertions.assertEquals(expectedTotel, result);
+        double expectedTotal = (3.2 * 100) / 16;
+        Assertions.assertEquals(expectedTotal, result);
     }
 }
