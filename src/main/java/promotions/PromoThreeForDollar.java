@@ -5,6 +5,6 @@ public class PromoThreeForDollar implements Promo {
     public double calculate(double articleNbr, double unitPrice) {
         if (articleNbr == 3)
             return 1;
-        else return articleNbr * unitPrice;
+        return (articleNbr % 3) * unitPrice + (int) (articleNbr / 3);
     }
 }
