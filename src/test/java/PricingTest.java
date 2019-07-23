@@ -45,6 +45,20 @@ class PricingTest {
         double result = pricingService.calculateTotal(articleWithQuantities);
         //Then
         Assertions.assertEquals(445d, result);
+    }
 
+    @Test
+    void should_calculate_total_amount_of_bought_weighted_articles_in_ounces(){
+        //Given
+        double priceForPound = 100.00 ;
+        Article article = new Article("article1", priceForPound);
+        double quantityInOunce = 3.2;
+        ArticleWithQuantity articleWithQuantity = new ArticleWithQuantity(article, quantityInOunce);
+        Set<ArticleWithQuantity> articleWithQuantities = new HashSet<>(Arrays.asList(articleWithQuantity));
+        //When
+        double result = pricingService.calculateTotal(articleWithQuantities);
+        //Then
+        double expectedTotel = (3.2 * 100) / 16 ;
+        Assertions.assertEquals(expectedTotel, result);
     }
 }
