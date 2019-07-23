@@ -3,6 +3,9 @@ package entities;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import promotions.Promo;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -11,10 +14,17 @@ public class Article {
     private String name;
     private double price;
     private Unity unity;
+    private Set<Promo> promos;
 
     public Article(String name, double price) {
         this.name = name;
         this.price = price;
+    }
+
+    public Article(String name, double price, Unity unity) {
+        this.name = name;
+        this.price = price;
+        this.unity = unity;
     }
 
     @Override
