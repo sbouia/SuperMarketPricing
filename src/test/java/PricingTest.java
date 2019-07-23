@@ -1,5 +1,6 @@
 import dto.ArticleWithQuantity;
 import entities.Article;
+import entities.Unity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pricing.PricingService;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 class PricingTest {
 
-    public static PricingService pricingService = new PricingService();
+    private static PricingService pricingService = new PricingService();
 
     @Test
     void test() {
@@ -48,17 +49,17 @@ class PricingTest {
     }
 
     @Test
-    void should_calculate_total_amount_of_bought_weighted_articles_in_ounces(){
+    void should_calculate_total_amount_of_bought_weighted_articles_in_ounces() {
         //Given
-        double priceForPound = 100.00 ;
-        Article article = new Article("article1", priceForPound);
+        double priceForPound = 100.00;
+        Article article = new Article("article1", priceForPound, Unity.POUND);
         double quantityInOunce = 3.2;
-        ArticleWithQuantity articleWithQuantity = new ArticleWithQuantity(article, quantityInOunce);
-        Set<ArticleWithQuantity> articleWithQuantities = new HashSet<>(Arrays.asList(articleWithQuantity));
+        ArticleWithQuantity articleWithQuantity = new ArticleWithQuantity(article, Unity.OUNCE.convertToPound(quantityInOunce));
+        Set<ArticleWithQuantity> articleWithQuantities = new HashSet<>(Collections.singletonList(articleWithQuantity));
         //When
         double result = pricingService.calculateTotal(articleWithQuantities);
         //Then
-        double expectedTotel = (3.2 * 100) / 16 ;
+        double expectedTotel = (3.2 * 100) / 16;
         Assertions.assertEquals(expectedTotel, result);
     }
 }

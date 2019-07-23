@@ -10,6 +10,12 @@ import lombok.Setter;
 public class Article {
     private String name;
     private double price;
+    private Unity unity;
+
+    public Article(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
 
     @Override
     public boolean equals(Object o) {
