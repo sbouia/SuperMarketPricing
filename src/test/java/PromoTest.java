@@ -70,11 +70,20 @@ class PromoTest {
         article.getPromos().add(goodPromoMock);
         article.getPromos().add(mediocrePromoMock);
         //when
-        Optional<Promo> bestPromo = pricingService.bestPromo(article);
+        Optional<Promo> bestPromo = pricingService.bestPromo(article, 3);
         //Then
         Assertions.assertTrue(bestPromo.isPresent());
-        Assertions.assertEquals(bestPromo.get(), bestPromoMock);
+        Assertions.assertEquals(bestPromoMock, bestPromo.get());
     }
 
+    @Test
+    void should_return_empty_optional_when_article_without_promos() {
+        //Given
+        Article article = new Article("article1", 100);
+        //when
+        Optional<Promo> bestPromo = pricingService.bestPromo(article, 3);
+        //Then
+        Assertions.assertFalse(bestPromo.isPresent());
+    }
 }
 
