@@ -43,4 +43,15 @@ class PromoTest {
         Assertions.assertEquals(1, result);
     }
 
+    @Test
+    void should_return_price_when_quantity_different_then_three() {
+        //Given
+        double articleNbr = 7;
+        double unitPrice = 0.5;
+        //When
+        double result = promoBuyTwoGetOneFree.calculate(articleNbr, unitPrice);
+        //Then
+        Assertions.assertEquals(2.5, result);
+    }
+
 }
