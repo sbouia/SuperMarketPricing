@@ -7,6 +7,8 @@ import java.util.Set;
 public class PricingService {
 
     public double calculateTotal(Set<ArticleWithQuantity> articleWithQuantities) {
-        return 0;
+        return articleWithQuantities.stream()
+                .map(articleWithQuantity -> (articleWithQuantity.getQuantity() * articleWithQuantity.getArticle().getPrice()))
+                .reduce(0d, (total, subTotal) -> total + subTotal);
     }
 }
