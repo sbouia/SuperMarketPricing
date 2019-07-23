@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import promotions.Promo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -14,7 +15,7 @@ public class Article {
     private String name;
     private double price;
     private Unity unity;
-    private Set<Promo> promos;
+    private Set<Promo> promos = new HashSet<>();
 
     public Article(String name, double price) {
         this.name = name;

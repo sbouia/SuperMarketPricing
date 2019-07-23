@@ -1,13 +1,18 @@
+import entities.Article;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pricing.PricingService;
 import promotions.Promo;
 import promotions.PromoBuyTwoGetOneFree;
 import promotions.PromoThreeForDollar;
+
+import java.util.Optional;
 
 class PromoTest {
 
     private static Promo promoThreeForDollar = new PromoThreeForDollar();
     private static Promo promoBuyTwoGetOneFree = new PromoBuyTwoGetOneFree();
+    private static PricingService pricingService = new PricingService();
 
     @Test
     void should_return_one_dollar_for_three_articles() {
@@ -54,4 +59,22 @@ class PromoTest {
         Assertions.assertEquals(2.5, result);
     }
 
+    @Test
+    void should_return_promo() {
+        //Given
+        Article article = new Article("article1", 100);
+        Promo bestPromoMock = new BestPromo();
+        Promo goodPromoMock = new GoodPromo();
+        Promo mediocrePromoMock = new MediocrePromo();
+        article.getPromos().add(bestPromoMock);
+        article.getPromos().add(goodPromoMock);
+        article.getPromos().add(mediocrePromoMock);
+        //when
+        Optional<Promo> bestPromo = pricingService.bestPromo(article);
+        //Then
+        Assertions.assertTrue(bestPromo.isPresent());
+        Assertions.assertEquals(bestPromo.get(), bestPromoMock);
+    }
+
 }
+
