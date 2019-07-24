@@ -1,4 +1,4 @@
-import entities.Article;
+import entities.ArticleWithoutWeight;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pricing.PricingService;
@@ -6,7 +6,8 @@ import promotions.Promo;
 import promotions.PromoBuyTwoGetOneFree;
 import promotions.PromoThreeForDollar;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.HashSet;
 
 class PromoTest {
 
@@ -60,30 +61,23 @@ class PromoTest {
     }
 
     @Test
-    void should_return_promo() {
+    void should_return_promo_price() {
         //Given
-        Article article = new Article("article1", 100);
-        Promo bestPromoMock = new BestPromo();
-        Promo goodPromoMock = new GoodPromo();
-        Promo mediocrePromoMock = new MediocrePromo();
-        article.getPromos().add(bestPromoMock);
-        article.getPromos().add(goodPromoMock);
-        article.getPromos().add(mediocrePromoMock);
+        ArticleWithoutWeight article = ArticleWithoutWeight.builder().name("article1").price(2).promos(new HashSet<>(Arrays.asList(promoBuyTwoGetOneFree,promoThreeForDollar))).build();
         //when
-        Optional<Promo> bestPromo = pricingService.bestPromo(article, 3);
+        double bestPromoPrice = pricingService.priceOfBestPromo(article, 4);
         //Then
-        Assertions.assertTrue(bestPromo.isPresent());
-        Assertions.assertEquals(bestPromoMock, bestPromo.get());
+        Assertions.assertEquals(3, bestPromoPrice);
     }
 
     @Test
     void should_return_empty_optional_when_article_without_promos() {
         //Given
-        Article article = new Article("article1", 100);
+        ArticleWithoutWeight article = ArticleWithoutWeight.builder().name("article1").price(100).promos(new HashSet<>()).build();
         //when
-        Optional<Promo> bestPromo = pricingService.bestPromo(article, 3);
+        double bestPromoPrice = pricingService.priceOfBestPromo(article, 3);
         //Then
-        Assertions.assertFalse(bestPromo.isPresent());
+        Assertions.assertEquals(0, bestPromoPrice);
     }
 }
 
