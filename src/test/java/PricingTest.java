@@ -72,7 +72,7 @@ class PricingTest {
 
         ArticleWithoutWeight article2 = ArticleWithoutWeight
                 .builder()
-                    .name("article1")
+                    .name("article2")
                     .price(50.00)
                 .build();
 

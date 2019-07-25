@@ -24,13 +24,12 @@ public class PricingService {
 
         if (Objects.isNull(article.getPromos()))
             return Optional.empty();
-        Optional<Promo> bestPromo = article.getPromos().stream().min((promo1, promo2) ->
+
+        return article.getPromos().stream().min((promo1, promo2) ->
                 (int) (
                         promo1.calculate(quantity, article.getPrice())
                                 - promo2.calculate(quantity, article.getPrice())
                 )
-        );
-        return bestPromo.map(promo -> promo.calculate(quantity, article.getPrice()));
-
+        ).map(promo -> promo.calculate(quantity,article.getPrice()));
     }
 }
