@@ -8,6 +8,7 @@ import promotions.PromoThreeForDollar;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 class PromoTest {
 
@@ -63,21 +64,32 @@ class PromoTest {
     @Test
     void should_return_promo_price() {
         //Given
-        ArticleWithoutWeight article = ArticleWithoutWeight.builder().name("article1").price(2).promos(new HashSet<>(Arrays.asList(promoBuyTwoGetOneFree,promoThreeForDollar))).build();
+        ArticleWithoutWeight article = ArticleWithoutWeight
+                .builder()
+                    .name("article1")
+                    .price(2)
+                    .promos(new HashSet<>(Arrays.asList(promoBuyTwoGetOneFree,promoThreeForDollar)))
+                .build();
         //when
-        double bestPromoPrice = pricingService.priceOfBestPromo(article, 4);
+        Optional<Double> bestPromoPrice = pricingService.priceOfBestPromo(article, 4);
         //Then
-        Assertions.assertEquals(3, bestPromoPrice);
+        Assertions.assertTrue(bestPromoPrice.isPresent());
+        Assertions.assertEquals(3, bestPromoPrice.get());
     }
 
     @Test
     void should_return_empty_optional_when_article_without_promos() {
         //Given
-        ArticleWithoutWeight article = ArticleWithoutWeight.builder().name("article1").price(100).promos(new HashSet<>()).build();
+        ArticleWithoutWeight article = ArticleWithoutWeight
+                .builder()
+                    .name("article1")
+                    .price(100)
+                    .promos(new HashSet<>())
+                .build();
         //when
-        double bestPromoPrice = pricingService.priceOfBestPromo(article, 3);
+        Optional<Double> bestPromoPrice = pricingService.priceOfBestPromo(article, 3);
         //Then
-        Assertions.assertEquals(0, bestPromoPrice);
+        Assertions.assertFalse(bestPromoPrice.isPresent());
     }
 }
 
